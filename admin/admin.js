@@ -1,55 +1,45 @@
-/* ===============================
-   CONFIG
-================================ */
 const API = "https://sharma-watch-backend.onrender.com";
 
 /* ===============================
-   ADMIN LOGIN (🔥 MISSING PART FIXED)
+   LOGIN
 ================================ */
 function login() {
-  const username = document.getElementById("username")?.value.trim();
-  const password = document.getElementById("password")?.value.trim();
+  const username = document.getElementById("username").value.trim();
+  const password = document.getElementById("password").value.trim();
   const msg = document.getElementById("msg");
-
-  if (msg) msg.innerText = "";
-
-  if (!username || !password) {
-    if (msg) msg.innerText = "Username and password required";
-    return;
-  }
 
   fetch(`${API}/admin/login`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    credentials: "include",   // 🔥 VERY IMPORTANT
+    credentials: "include",
     body: JSON.stringify({ username, password })
   })
-    .then(async res => {
-      const data = await res.json();
-
-      if (!res.ok) {
-        throw new Error(data.error || "Login failed");
-      }
-
-      // ✅ SUCCESS
+    .then(res => {
+      if (!res.ok) throw new Error("Invalid credentials");
+      return res.json();
+    })
+    .then(() => {
       window.location.href = "dashboard.html";
     })
     .catch(err => {
-      if (msg) msg.innerText = err.message;
+      msg.innerText = err.message;
     });
 }
 
 /* ===============================
-   LOAD PRODUCTS
+   LOAD PRODUCTS (NO AUTO LOGOUT)
 ================================ */
 function loadProducts() {
-  fetch(`${API}/admin/products`, { credentials: "include" })
-    .then(r => {
-      if (r.status === 401) {
+  fetch(`${API}/admin/products`, {
+    credentials: "include"
+  })
+    .then(res => {
+      if (res.status === 401) {
+        alert("Session expired. Please login again.");
         window.location.href = "login.html";
         return [];
       }
-      return r.json();
+      return res.json();
     })
     .then(products => {
       const box = document.getElementById("productList");
@@ -57,28 +47,13 @@ function loadProducts() {
 
       box.innerHTML = "";
 
-      if (!products.length) {
-        box.innerHTML = "<p>No products found</p>";
-        return;
-      }
-
       products.forEach(p => {
-        const row = document.createElement("div");
-        row.className = "product-row";
-
-        row.innerHTML = `
-          <div>
-            <b>${p.name}</b><br>
-            <small>${p.brand}</small>
-          </div>
-          <div>₹${p.price}</div>
-          <div>
-            <button onclick="openImageUpload(${p.id})">📷 Upload Images</button>
-            <button onclick="deleteProduct(${p.id})">❌ Delete</button>
+        box.innerHTML += `
+          <div class="product-row">
+            <b>${p.name}</b> (${p.brand}) — ₹${p.price}
+            <button onclick="deleteProduct(${p.id})">❌</button>
           </div>
         `;
-
-        box.appendChild(row);
       });
     });
 }
@@ -87,101 +62,37 @@ function loadProducts() {
    ADD PRODUCT
 ================================ */
 function addProduct() {
-  const name = document.getElementById("name")?.value.trim();
-  const brand = document.getElementById("brand")?.value.trim();
-  const price = document.getElementById("price")?.value;
-  const desc = document.getElementById("desc")?.value.trim();
-
-  if (!name || !brand || !price) {
-    alert("Name, brand and price required");
-    return;
-  }
-
   fetch(`${API}/admin/product`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     credentials: "include",
     body: JSON.stringify({
-      name,
-      brand,
-      selling_price: price,
-      description: desc
+      name: name.value,
+      brand: brand.value,
+      selling_price: price.value,
+      description: desc.value
     })
-  })
-    .then(r => r.json())
-    .then(() => loadProducts());
+  }).then(loadProducts);
 }
 
 /* ===============================
-   DELETE PRODUCT
+   DELETE
 ================================ */
 function deleteProduct(id) {
-  if (!confirm("Delete this product?")) return;
-
   fetch(`${API}/admin/product/${id}`, {
     method: "DELETE",
     credentials: "include"
-  }).then(() => loadProducts());
+  }).then(loadProducts);
 }
 
 /* ===============================
-   IMAGE UPLOAD
+   LOGOUT (ONLY ON CLICK)
 ================================ */
-let CURRENT_PRODUCT_ID = null;
-
-function openImageUpload(productId) {
-  CURRENT_PRODUCT_ID = productId;
-  document.getElementById("imageInput").click();
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-  const input = document.getElementById("imageInput");
-  if (!input) return;
-
-  input.addEventListener("change", async () => {
-    if (!CURRENT_PRODUCT_ID) return;
-
-    const files = Array.from(input.files);
-
-    if (files.length === 0) return;
-    if (files.length > 5) {
-      alert("Maximum 5 images allowed");
-      input.value = "";
-      return;
-    }
-
-    const formData = new FormData();
-    files.forEach(file => formData.append("images", file));
-
-    try {
-      const res = await fetch(
-        `${API}/admin/product/${CURRENT_PRODUCT_ID}/image`,
-        {
-          method: "POST",
-          credentials: "include",
-          body: formData
-        }
-      );
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        alert(data.error || "Upload failed");
-        return;
-      }
-
-      alert("Images uploaded successfully ✅");
-    } catch (err) {
-      alert("Image upload failed ❌");
-      console.error(err);
-    }
-
-    input.value = "";
-    CURRENT_PRODUCT_ID = null;
+function logoutAdmin() {
+  fetch(`${API}/admin/logout`, {
+    method: "POST",
+    credentials: "include"
+  }).finally(() => {
+    window.location.href = "login.html";
   });
-
-  // auto load dashboard
-  if (window.location.href.includes("dashboard")) {
-    loadProducts();
-  }
-});
+}

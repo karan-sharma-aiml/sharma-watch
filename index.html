@@ -11,6 +11,47 @@
   <style>
     body{background:#f6f6f6}
 
+    /* ===== NAVBAR FIX (ONLY CHANGE) ===== */
+    .navbar{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:16px 28px;
+      background:#111;
+    }
+
+    .navbar .logo{
+      font-size:18px;
+      font-weight:700;
+      color:#c89b3c;
+      letter-spacing:1px;
+    }
+
+    .navbar nav{
+      display:flex;
+      gap:14px;
+    }
+
+    .navbar nav a{
+      color:#ddd;
+      text-decoration:none;
+      padding:8px 14px;
+      border-radius:20px;
+      font-size:14px;
+      transition:all .25s ease;
+    }
+
+    .navbar nav a:hover{
+      background:#c89b3c;
+      color:#000;
+    }
+
+    .navbar nav a.active{
+      background:#c89b3c;
+      color:#000;
+      font-weight:600;
+    }
+
     /* ===== HERO ===== */
     .hero{
       height:90vh;
@@ -241,6 +282,31 @@
   <img src="https://images.unsplash.com/photo-1519741497674-611481863552" alt="Luxury Watch">
 </section>
 
+<!-- ✅ PREMIUM FEATURES (RESTORED) -->
+<section class="section">
+  <h2>Why Customers Trust Sharma Watch</h2>
+
+  <div class="feature-grid">
+    <div class="feature-box">
+      <span>💸</span>
+      <h4>Cash on Delivery</h4>
+      <p>Pay only after receiving your watch. No advance risk.</p>
+    </div>
+
+    <div class="feature-box">
+      <span>📱</span>
+      <h4>Order on WhatsApp</h4>
+      <p>Direct order with the owner. No middleman.</p>
+    </div>
+
+    <div class="feature-box">
+      <span>🚚</span>
+      <h4>Pan-Nepal Delivery</h4>
+      <p>Fast & secure delivery across all Nepal.</p>
+    </div>
+  </div>
+</section>
+
 <!-- ===== FOOTER ===== -->
 <footer>
   © 2026 SharmaWatch.in · Crafted With Trust & Precision
@@ -277,29 +343,3 @@ fetch(API + "/api/products")
 
 </body>
 </html>
-
-<!-- ===== PREMIUM FEATURES ===== -->
-<section class="section">
-  <h2>Why Customers Trust Sharma Watch</h2>
-
-  <div class="feature-grid">
-    <div class="feature-box">
-      <span>💸</span>
-      <h4>Cash on Delivery</h4>
-      <p>Pay only after receiving your watch. No advance risk.</p>
-    </div>
-
-    <div class="feature-box">
-      <span>📱</span>
-      <h4>Order on WhatsApp</h4>
-      <p>Direct order with the owner. No middleman.</p>
-    </div>
-
-
-    <div class="feature-box">
-      <span>🚚</span>
-      <h4>Pan-nepal Delivery</h4>
-      <p>Fast & secure delivery across all nepal.</p>
-    </div>
-  </div>
-</section>

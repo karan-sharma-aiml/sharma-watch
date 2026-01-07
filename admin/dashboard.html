@@ -13,7 +13,10 @@
   <!-- Google Font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
 </head>
 
 <body class="admin-body">
@@ -73,7 +76,10 @@
 
       <div class="field">
         <label>Description</label>
-        <textarea id="desc" placeholder="Premium original watch with warranty..."></textarea>
+        <textarea
+          id="desc"
+          placeholder="Premium original watch with warranty..."
+        ></textarea>
       </div>
 
       <button class="primary-btn" onclick="addProduct()">➕ Add Product</button>
@@ -86,7 +92,6 @@
     <!-- ===== PRODUCT LIST ===== -->
     <section class="card">
       <h2>All Products</h2>
-
       <div id="productList" class="product-admin-list">
         <!-- Products load here -->
       </div>
@@ -108,12 +113,26 @@
 <script src="admin.js"></script>
 
 <script>
+  const API = "https://sharma-watch-backend.onrender.com";
+
+  // ✅ LOGOUT (SIMPLE + SAFE)
   function logoutAdmin() {
-    fetch("http://127.0.0.1:5000/admin/logout", {
+    fetch(`${API}/admin/logout`, {
       method: "POST",
       credentials: "include"
-    }).then(() => location.href = "login.html");
+    })
+    .finally(() => {
+      window.location.replace("login.html");
+    });
   }
+
+  // ✅ DASHBOARD INIT
+  // ❌ NO AUTO SESSION CHECK HERE
+  document.addEventListener("DOMContentLoaded", () => {
+    if (typeof loadProducts === "function") {
+      loadProducts(); // admin.js handles 401 safely
+    }
+  });
 </script>
 
 </body>
