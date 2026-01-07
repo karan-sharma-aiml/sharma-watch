@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Product | Sharma Watch</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link rel="stylesheet" href="css/index.css" />
+
+  <style>
+    body { background:#f6f6f6; }
+
+    .product-wrapper{
+      max-width:1200px;
+      margin:50px auto;
+      padding:30px;
+      background:#fff;
+      border-radius:18px;
+      box-shadow:0 16px 40px rgba(0,0,0,.12);
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:40px;
+    }
+
+    @media(max-width:900px){
+      .product-wrapper{ grid-template-columns:1fr; }
+    }
+
+    /* ===== IMAGE SLIDER ===== */
+    .slider{ position:relative; }
+
+    .slider img{
+      width:100%;
+      height:420px;
+      object-fit:cover;
+      border-radius:14px;
+      background:#eee;
+    }
+
+    .arrow{
+      position:absolute;
+      top:50%;
+      transform:translateY(-50%);
+      background:rgba(0,0,0,.6);
+      color:#fff;
+      border:none;
+      width:44px;
+      height:44px;
+      border-radius:50%;
+      cursor:pointer;
+      font-size:20px;
+    }
+
+    .arrow.left{ left:10px; }
+    .arrow.right{ right:10px; }
+
+    /* ===== THUMBNAILS ===== */
+    .thumbs{
+      display:flex;
+      gap:10px;
+      margin-top:14px;
+      overflow-x:auto;
+    }
+
+    .thumbs img{
+      width:70px;
+      height:70px;
+      object-fit:cover;
+      border-radius:10px;
+      cursor:pointer;
+      opacity:.6;
+      border:2px solid transparent;
+    }
+
+    .thumbs img.active{
+      opacity:1;
+      border-color:#c89b3c;
+    }
+
+    /* ===== INFO ===== */
+    .product-details h1{ font-size:30px; }
+    .brand{ color:#777;margin:8px 0; }
+    .price{ font-size:28px;font-weight:bold;margin-top:8px; }
+
+    .trust-points{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
+      margin:18px 0;
+      font-size:14px;
+      color:#444;
+    }
+
+    .desc{ margin-top:16px;line-height:1.7; }
+
+    .actions{
+      margin-top:24px;
+      display:flex;
+      gap:14px;
+      flex-wrap:wrap;
+    }
+
+    .btn{
+      padding:14px 26px;
+      border-radius:30px;
+      border:none;
+      cursor:pointer;
+      font-weight:bold;
+      font-size:15px;
+    }
+
+    .btn-buy{ background:#c89b3c; }
+    .btn-wa{ background:#25D366;color:#fff; }
+
+    /* ===== STICKY MOBILE BAR ===== */
+    .sticky-bar{
+      display:none;
+    }
+
+    @media(max-width:768px){
+      .actions{ display:none; }
+
+      .sticky-bar{
+        display:flex;
+        position:fixed;
+        bottom:0;
+        left:0;
+        right:0;
+        background:#fff;
+        box-shadow:0 -4px 20px rgba(0,0,0,.15);
+        padding:12px;
+        gap:10px;
+        z-index:99;
+      }
+
+      .sticky-bar button{
+        flex:1;
+        padding:14px;
+        border-radius:30px;
+        font-weight:bold;
+        border:none;
+      }
+
+      .sticky-buy{ background:#c89b3c; }
+      .sticky-wa{ background:#25D366;color:#fff; }
+    }
+
+    footer{
+      margin-top:80px;
+      background:#111;
+      color:#aaa;
+      text-align:center;
+      padding:20px;
+    }
+  </style>
+</head>
+
+<body>
+
+<header class="navbar">
+  <div class="logo">Sharma Watch</div>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="shop.html">Shop</a>
+    <a href="trust.html">Trust</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+</header>
+
+<div id="productContainer"></div>
+
+<footer>© 2026 Sharma Watch</footer>
+
+<script>
+const API = "https://sharma-watch-backend.onrender.com";
+const OWNER_PHONE = "9779827286613";
+
+const params = new URLSearchParams(location.search);
+const id = params.get("id");
+
+if(!id || id==="null" || id==="undefined"){
+  location.href="shop.html";
+}
+
+let images = [];
+let index = 0;
+let startX = 0;
+
+fetch(API + "/api/product/" + id)
+  .then(r => r.ok ? r.json() : Promise.reject())
+  .then(renderProduct)
+  .catch(() => location.href="shop.html");
+
+function renderProduct(p){
+  images = (p.images && p.images.length)
+    ? p.images.map(i => API + i)
+    : ["https://via.placeholder.com/500"];
+
+  index = 0;
+
+  document.getElementById("productContainer").innerHTML = `
+    <div class="product-wrapper">
+      <div>
+        <div class="slider" id="slider">
+          <button class="arrow left" onclick="prev()">‹</button>
+          <img id="mainImg" src="${images[0]}" alt="${p.name}">
+          <button class="arrow right" onclick="next()">›</button>
+        </div>
+
+        <div class="thumbs">
+          ${images.map((img,i)=>`
+            <img src="${img}" class="${i===0?'active':''}" onclick="go(${i})">
+          `).join("")}
+        </div>
+      </div>
+
+      <div class="product-details">
+        <h1>${p.name}</h1>
+        <div class="brand">${p.brand}</div>
+        <div class="price">₹${p.price}</div>
+
+        <div class="trust-points">
+          <div>💎 Original Product</div>
+          <div>📦 Secure Packaging</div>
+          <div>🤝 Direct Owner Deal</div>
+          <div>🕒 Long Lasting</div>
+        </div>
+
+        <div class="desc">${p.description || "Premium original watch with trusted quality."}</div>
+
+        <div class="actions">
+          <button class="btn btn-buy" onclick="openWhatsApp('${p.name}', '${p.price}')">Buy Now</button>
+          <button class="btn btn-wa" onclick="openWhatsApp('${p.name}', '${p.price}')">WhatsApp</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="sticky-bar">
+      <button class="sticky-buy" onclick="openWhatsApp('${p.name}', '${p.price}')">Buy Now</button>
+      <button class="sticky-wa" onclick="openWhatsApp('${p.name}', '${p.price}')">WhatsApp</button>
+    </div>
+  `;
+
+  enableSwipe();
+}
+
+function update(){
+  document.getElementById("mainImg").src = images[index];
+  document.querySelectorAll(".thumbs img").forEach((t,i)=>{
+    t.classList.toggle("active", i===index);
+  });
+}
+
+function next(){ index = (index+1)%images.length; update(); }
+function prev(){ index = (index-1+images.length)%images.length; update(); }
+function go(i){ index=i; update(); }
+
+function enableSwipe(){
+  const s = document.getElementById("slider");
+  s.addEventListener("touchstart",e=> startX=e.touches[0].clientX);
+  s.addEventListener("touchend",e=>{
+    const endX=e.changedTouches[0].clientX;
+    if(startX-endX>50) next();
+    if(endX-startX>50) prev();
+  });
+}
+
+function openWhatsApp(name, price){
+  const message =
+    `Hello Sharma Watch 👋%0A%0A` +
+    `I am interested in:%0A` +
+    `📌 ${name}%0A` +
+    `💰 Price: ₹${price}%0A%0A` +
+    `Please share more details.`;
+
+  window.open(`https://wa.me/${OWNER_PHONE}?text=${message}`, "_blank");
+}
+</script>
+
+</body>
+</html>

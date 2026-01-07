@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Admin Dashboard | Sharma Watch</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: #f3f4f6;
+      color: #222;
+    }
+
+    /* ===== HEADER ===== */
+    header {
+      background: #111;
+      color: #fff;
+      padding: 18px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    header h1 {
+      font-size: 20px;
+      margin: 0;
+    }
+
+    header span {
+      color: #c89b3c;
+    }
+
+    /* ===== LAYOUT ===== */
+    .container {
+      max-width: 1200px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 30px;
+    }
+
+    /* ===== CARD ===== */
+    .card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 22px;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+    }
+
+    .card h2 {
+      margin-top: 0;
+      font-size: 18px;
+      margin-bottom: 14px;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 12px 14px;
+      margin: 10px 0;
+      border-radius: 10px;
+      border: 1px solid #ddd;
+      font-family: inherit;
+      font-size: 14px;
+    }
+
+    textarea { resize: vertical; min-height: 80px; }
+
+    button {
+      margin-top: 12px;
+      padding: 12px;
+      width: 100%;
+      border-radius: 30px;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+      background: #111;
+      color: #fff;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background: #c89b3c;
+      color: #000;
+    }
+
+    pre {
+      background: #f7f7f7;
+      padding: 12px;
+      border-radius: 10px;
+      font-size: 12px;
+      max-height: 180px;
+      overflow: auto;
+    }
+
+    footer {
+      margin-top: 60px;
+      padding: 20px;
+      text-align: center;
+      font-size: 13px;
+      color: #777;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>🕒 <span>Sharma Watch</span> Admin Panel</h1>
+  <div>Secure Dashboard</div>
+</header>
+
+<div class="container">
+
+  <div class="grid">
+
+    <!-- LOGIN -->
+    <div class="card">
+      <h2>🔐 Admin Login</h2>
+      <input id="username" placeholder="Username">
+      <input id="password" type="password" placeholder="Password">
+      <button onclick="login()">Login</button>
+      <pre id="loginResult"></pre>
+    </div>
+
+    <!-- ADD PRODUCT -->
+    <div class="card">
+      <h2>➕ Add Product</h2>
+      <input id="name" placeholder="Watch Name">
+      <input id="brand" placeholder="Brand">
+      <input id="price" placeholder="Selling Price">
+      <textarea id="desc" placeholder="Description"></textarea>
+      <button onclick="addProduct()">Add Product</button>
+      <pre id="addResult"></pre>
+    </div>
+
+    <!-- IMAGE UPLOAD -->
+    <div class="card">
+      <h2>📸 Upload Product Images</h2>
+      <input id="productId" placeholder="Product ID">
+      <input type="file" id="imageFile" multiple>
+      <button onclick="uploadImages()">Upload Images</button>
+      <pre id="imgResult"></pre>
+    </div>
+
+    <!-- LIST PRODUCTS -->
+    <div class="card">
+      <h2>📦 All Products</h2>
+      <button onclick="loadProducts()">Load Products</button>
+      <pre id="products"></pre>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  © 2026 Sharma Watch · Admin Access Only
+</footer>
+
+<script>
+/* 🔁 CHANGE THIS AFTER DEPLOY */
+const API = "https://sharma-watch-backend.onrender.com";
+
+function login() {
+  fetch(API + "/admin/login", {
+    method: "POST",
+    credentials: "include",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      username: username.value,
+      password: password.value
+    })
+  })
+  .then(r => r.json())
+  .then(d => loginResult.textContent = JSON.stringify(d, null, 2));
+}
+
+function addProduct() {
+  fetch(API + "/admin/product", {
+    method: "POST",
+    credentials: "include",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      name: name.value,
+      brand: brand.value,
+      selling_price: price.value,
+      description: desc.value
+    })
+  })
+  .then(r => r.json())
+  .then(d => addResult.textContent = JSON.stringify(d, null, 2));
+}
+
+function uploadImages() {
+  const files = imageFile.files;
+  const fd = new FormData();
+
+  for (let f of files) {
+    fd.append("images", f);
+  }
+
+  fetch(`${API}/admin/product/${productId.value}/image`, {
+    method: "POST",
+    credentials: "include",
+    body: fd
+  })
+  .then(r => r.json())
+  .then(d => imgResult.textContent = JSON.stringify(d, null, 2));
+}
+
+function loadProducts() {
+  fetch(API + "/api/products")
+    .then(r => r.json())
+    .then(d => products.textContent = JSON.stringify(d, null, 2));
+}
+</script>
+
+</body>
+</html>

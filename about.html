@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>About Us | Sharma Watch</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link rel="stylesheet" href="css/index.css" />
+
+  <style>
+    body { background:#f6f6f6; }
+
+    /* ===== HERO ===== */
+    .about-hero{
+      background:linear-gradient(rgba(0,0,0,.65),rgba(0,0,0,.65)),
+      url("https://images.unsplash.com/photo-1524592094714-0f0654e20314")
+      center/cover no-repeat;
+      padding:100px 20px;
+      text-align:center;
+      color:#fff;
+    }
+
+    .about-hero h1{
+      font-size:46px;
+      letter-spacing:2px;
+      margin-bottom:12px;
+    }
+
+    .about-hero p{
+      font-size:17px;
+      opacity:.9;
+    }
+
+    /* ===== CONTENT ===== */
+    .about-container{
+      max-width:1200px;
+      margin:80px auto;
+      padding:0 20px;
+    }
+
+    .about-section{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:50px;
+      align-items:center;
+      margin-bottom:80px;
+    }
+
+    @media(max-width:900px){
+      .about-section{ grid-template-columns:1fr; }
+    }
+
+    .about-text h2{
+      font-size:32px;
+      margin-bottom:16px;
+    }
+
+    .about-text p{
+      line-height:1.8;
+      color:#444;
+      font-size:15px;
+    }
+
+    .about-image img{
+      width:100%;
+      border-radius:20px;
+      box-shadow:0 18px 40px rgba(0,0,0,.18);
+    }
+
+    /* ===== VALUES ===== */
+    .values{
+      background:#111;
+      color:#fff;
+      padding:70px 30px;
+      border-radius:22px;
+      text-align:center;
+    }
+
+    .values h2{
+      font-size:34px;
+      margin-bottom:40px;
+    }
+
+    .values-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+      gap:30px;
+    }
+
+    .value-card{
+      background:#1c1c1c;
+      padding:30px;
+      border-radius:18px;
+      transition:.3s;
+    }
+
+    .value-card:hover{
+      transform:translateY(-6px);
+      background:#222;
+    }
+
+    .value-icon{
+      font-size:36px;
+      margin-bottom:14px;
+    }
+
+    .value-card h3{
+      margin-bottom:10px;
+    }
+
+    .value-card p{
+      font-size:14px;
+      opacity:.9;
+      line-height:1.6;
+    }
+
+    /* ===== CTA ===== */
+    .about-cta{
+      margin-top:90px;
+      text-align:center;
+    }
+
+    .about-cta h2{
+      font-size:34px;
+      margin-bottom:14px;
+    }
+
+    .about-cta p{
+      max-width:700px;
+      margin:auto;
+      color:#555;
+      line-height:1.7;
+    }
+
+    .about-cta a{
+      display:inline-block;
+      margin-top:26px;
+      background:#c89b3c;
+      color:#000;
+      padding:14px 36px;
+      border-radius:30px;
+      text-decoration:none;
+      font-weight:bold;
+      transition:.3s;
+    }
+
+    .about-cta a:hover{
+      background:#e0b04f;
+    }
+
+    footer{
+      background:#111;
+      color:#aaa;
+      text-align:center;
+      padding:20px;
+      font-size:14px;
+      margin-top:80px;
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- ===== NAVBAR ===== -->
+<header class="navbar">
+  <div class="logo">Sharma Watch</div>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="shop.html">Shop</a>
+    <a href="about.html" class="active">About</a>
+    <a href="trust.html">Trust</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+</header>
+
+<!-- ===== HERO ===== -->
+<section class="about-hero">
+  <h1>Our Story</h1>
+  <p>More Than Watches — A Commitment to Time & Trust</p>
+</section>
+
+<!-- ===== STORY ===== -->
+<section class="about-container">
+
+  <div class="about-section">
+    <div class="about-text">
+      <h2>How Sharma Watch Started</h2>
+      <p>
+        Sharma Watch was born with a simple belief —
+        <b>quality should speak louder than advertisements.</b><br><br>
+        What started as a small passion for fine timepieces
+        has grown into a trusted destination for premium watches.
+        Every piece we sell reflects craftsmanship, durability,
+        and timeless design.
+      </p>
+    </div>
+
+    <div class="about-image">
+      <img src="https://images.unsplash.com/photo-1503341455253-b2e723bb3dbb" alt="Watch Craft">
+    </div>
+  </div>
+
+  <div class="about-section">
+    <div class="about-image">
+      <img src="https://images.unsplash.com/photo-1519741497674-611481863552" alt="Watch Detail">
+    </div>
+
+    <div class="about-text">
+      <h2>What Makes Us Different</h2>
+      <p>
+        We don’t believe in fake discounts or flashy promises.
+        Instead, we focus on honest pricing, original products,
+        and direct communication with customers.<br><br>
+        When you buy from Sharma Watch, you deal directly with the owner —
+        no confusion, no middlemen.
+      </p>
+    </div>
+  </div>
+
+</section>
+
+<!-- ===== VALUES ===== -->
+<section class="values">
+  <h2>Our Core Values</h2>
+
+  <div class="values-grid">
+    <div class="value-card">
+      <div class="value-icon">🕒</div>
+      <h3>Timeless Quality</h3>
+      <p>Every watch is selected for durability and long-term value.</p>
+    </div>
+
+    <div class="value-card">
+      <div class="value-icon">🤝</div>
+      <h3>Honest Dealings</h3>
+      <p>Clear communication, transparent pricing, zero gimmicks.</p>
+    </div>
+
+    <div class="value-card">
+      <div class="value-icon">💎</div>
+      <h3>Premium Feel</h3>
+      <p>Luxury designs that elevate your everyday style.</p>
+    </div>
+
+    <div class="value-card">
+      <div class="value-icon">📞</div>
+      <h3>Direct Support</h3>
+      <p>Chat directly with the owner before and after purchase.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CTA ===== -->
+<section class="about-cta">
+  <h2>Ready to Find Your Perfect Watch?</h2>
+  <p>
+    Explore our collection and experience the confidence
+    of owning a watch that truly represents you.
+  </p>
+
+  <a href="shop.html">Explore Collection</a>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  © 2026 Sharma Watch · Crafted With Trust
+</footer>
+
+</body>
+</html>

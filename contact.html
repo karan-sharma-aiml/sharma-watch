@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>About Us | Sharma Watch</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="css/index.css">
+
+  <style>
+    body { background:#f6f6f6; }
+
+    /* ===== HERO ===== */
+    .about-hero{
+      min-height:85vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      color:#fff;
+      padding:40px 20px;
+      background:
+        linear-gradient(135deg, rgba(0,0,0,.7), rgba(0,0,0,.4)),
+        url("https://images.unsplash.com/photo-1519741497674-611481863552")
+        center/cover no-repeat;
+    }
+
+    .about-hero h1{
+      font-size:52px;
+      letter-spacing:2px;
+      margin-bottom:14px;
+    }
+
+    .about-hero p{
+      font-size:18px;
+      opacity:.9;
+      max-width:700px;
+      margin:auto;
+    }
+
+    /* ===== STORY ===== */
+    .section{
+      max-width:1100px;
+      margin:80px auto;
+      padding:0 20px;
+    }
+
+    .story{
+      background:#fff;
+      padding:50px;
+      border-radius:22px;
+      box-shadow:0 18px 45px rgba(0,0,0,.12);
+    }
+
+    .story h2{
+      font-size:34px;
+      margin-bottom:18px;
+    }
+
+    .story p{
+      line-height:1.8;
+      font-size:16px;
+      color:#444;
+    }
+
+    /* ===== VALUES ===== */
+    .values{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+      gap:24px;
+      margin-top:60px;
+    }
+
+    .value-card{
+      background:#fafafa;
+      padding:28px;
+      border-radius:20px;
+      box-shadow:0 10px 25px rgba(0,0,0,.08);
+      transition:.3s;
+    }
+
+    .value-card:hover{
+      transform:translateY(-8px);
+      box-shadow:0 18px 40px rgba(0,0,0,.14);
+    }
+
+    .value-card h3{
+      font-size:20px;
+      margin-bottom:10px;
+    }
+
+    .value-card p{
+      font-size:14px;
+      color:#555;
+      line-height:1.6;
+    }
+
+    /* ===== OWNER ===== */
+    .owner{
+      margin-top:90px;
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:40px;
+      align-items:center;
+      background:#111;
+      color:#fff;
+      padding:50px;
+      border-radius:26px;
+    }
+
+    .owner h2{ font-size:32px; margin-bottom:14px; }
+    .owner p{ line-height:1.8; opacity:.9; }
+
+    .owner-box{
+      background:#1c1c1c;
+      padding:30px;
+      border-radius:18px;
+    }
+
+    @media(max-width:900px){
+      .owner{ grid-template-columns:1fr; }
+    }
+
+    /* ===== CTA ===== */
+    .about-cta{
+      text-align:center;
+      margin:80px 0;
+    }
+
+    .about-cta button{
+      padding:18px 42px;
+      border:none;
+      border-radius:40px;
+      background:#25D366;
+      color:#fff;
+      font-size:18px;
+      font-weight:bold;
+      cursor:pointer;
+      box-shadow:0 10px 30px rgba(0,0,0,.2);
+    }
+
+    footer{
+      background:#111;
+      color:#aaa;
+      text-align:center;
+      padding:20px;
+    }
+  </style>
+</head>
+
+<body>
+
+<header class="navbar">
+  <div class="logo">Sharma Watch</div>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="shop.html">Shop</a>
+    <a href="about.html" class="active">About</a>
+    <a href="trust.html">Trust</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section class="about-hero">
+  <div>
+    <h1>More Than Just Watches</h1>
+    <p>
+      We don’t just sell timepieces —  
+      we deliver confidence, elegance, and trust on your wrist.
+    </p>
+  </div>
+</section>
+
+<!-- STORY -->
+<section class="section">
+  <div class="story">
+    <h2>Our Story</h2>
+    <p>
+      Sharma Watch was created with a simple belief —  
+      <b>quality should speak louder than advertisements.</b><br><br>
+
+      In a world full of fake listings and misleading promises,
+      we chose honesty, transparency, and personal connection.
+      Every watch you see here is carefully selected,
+      inspected, and offered with pride.<br><br>
+
+      We believe a watch is not just an accessory —
+      it is a reflection of your personality, discipline, and style.
+    </p>
+  </div>
+
+  <!-- VALUES -->
+  <div class="values">
+    <div class="value-card">
+      <h3>⌚ Quality First</h3>
+      <p>
+        Every watch is chosen for durability, design,
+        and long-term reliability.
+      </p>
+    </div>
+
+    <div class="value-card">
+      <h3>🤝 Honest Dealing</h3>
+      <p>
+        No hidden charges, no fake claims —
+        what you see is exactly what you get.
+      </p>
+    </div>
+
+    <div class="value-card">
+      <h3>💬 Direct Communication</h3>
+      <p>
+        Customers speak directly with us on WhatsApp —
+        real photos, real answers, real people.
+      </p>
+    </div>
+
+    <div class="value-card">
+      <h3>🌍 Growing With Trust</h3>
+      <p>
+        Trusted by customers across India and Nepal,
+        growing only through genuine satisfaction.
+      </p>
+    </div>
+  </div>
+
+  <!-- OWNER -->
+  <div class="owner">
+    <div>
+      <h2>Message From The Founder</h2>
+      <p>
+        “My goal was never to build a flashy store.
+        I wanted to create a place where customers feel safe,
+        respected, and confident in what they buy.<br><br>
+
+        Sharma Watch exists because trust still matters.”
+      </p>
+    </div>
+
+    <div class="owner-box">
+      <p>
+        📍 India & Nepal<br>
+        📧 karanku1882@gmail.com<br>
+        💬 Direct WhatsApp Support Available
+      </p>
+    </div>
+  </div>
+
+</section>
+
+<!-- CTA -->
+<div class="about-cta">
+  <button onclick="window.open('https://wa.me/9779827286613','_blank')">
+    Talk To Us On WhatsApp
+  </button>
+</div>
+
+<footer>
+  © 2026 Sharma Watch · Crafted With Passion & Trust
+</footer>
+
+</body>
+</html>

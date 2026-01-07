@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Admin Dashboard | Sharma Watch</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Global CSS -->
+  <link rel="stylesheet" href="../css/index.css" />
+  <!-- Admin CSS -->
+  <link rel="stylesheet" href="admin.css" />
+
+  <!-- Google Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body class="admin-body">
+
+<!-- ================= TOP BAR ================= -->
+<header class="admin-topbar">
+  <div class="top-left">
+    <div class="logo">🕒 Sharma Watch</div>
+    <span class="tagline">Admin Dashboard</span>
+  </div>
+
+  <button class="logout-btn" onclick="logoutAdmin()">Logout</button>
+</header>
+
+<!-- ================= DASHBOARD ================= -->
+<div class="admin-dashboard">
+
+  <!-- ===== SIDEBAR ===== -->
+  <aside class="admin-sidebar">
+    <h3>Admin Panel</h3>
+    <ul>
+      <li class="active">📦 Products</li>
+      <li>📷 Images</li>
+      <li>⚙ Settings</li>
+    </ul>
+  </aside>
+
+  <!-- ===== MAIN CONTENT ===== -->
+  <main class="admin-main">
+
+    <!-- ===== PAGE TITLE ===== -->
+    <div class="page-title">
+      <h1>Products Management</h1>
+      <p>Manage watches, prices and images</p>
+    </div>
+
+    <!-- ===== ADD PRODUCT ===== -->
+    <section class="card card-glass">
+      <h2>Add New Product</h2>
+
+      <div class="form-grid">
+        <div class="field">
+          <label>Product Name</label>
+          <input id="name" placeholder="Eg: Rolex Submariner" />
+        </div>
+
+        <div class="field">
+          <label>Brand</label>
+          <input id="brand" placeholder="Eg: Rolex" />
+        </div>
+
+        <div class="field">
+          <label>Selling Price (₹)</label>
+          <input id="price" type="number" placeholder="Eg: 14999" />
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Description</label>
+        <textarea id="desc" placeholder="Premium original watch with warranty..."></textarea>
+      </div>
+
+      <button class="primary-btn" onclick="addProduct()">➕ Add Product</button>
+
+      <p class="hint">
+        ℹ️ First add product → then upload 1–5 images from product list
+      </p>
+    </section>
+
+    <!-- ===== PRODUCT LIST ===== -->
+    <section class="card">
+      <h2>All Products</h2>
+
+      <div id="productList" class="product-admin-list">
+        <!-- Products load here -->
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- ================= IMAGE INPUT ================= -->
+<input
+  type="file"
+  id="imageInput"
+  hidden
+  accept="image/*"
+  multiple
+/>
+
+<!-- ================= JS ================= -->
+<script src="admin.js"></script>
+
+<script>
+  function logoutAdmin() {
+    fetch("http://127.0.0.1:5000/admin/logout", {
+      method: "POST",
+      credentials: "include"
+    }).then(() => location.href = "login.html");
+  }
+</script>
+
+</body>
+</html>

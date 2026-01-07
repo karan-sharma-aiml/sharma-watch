@@ -1,0 +1,235 @@
+/* ===============================
+   ADMIN RESET (SAFE)
+================================ */
+.admin-body,
+.admin-body * {
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+/* ===============================
+   BODY
+================================ */
+.admin-body {
+  margin: 0;
+  background: #f4f6f8;
+}
+
+/* ===============================
+   TOP BAR
+================================ */
+.admin-topbar {
+  background: #111;
+  color: #fff;
+  padding: 16px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.admin-topbar .logo {
+  font-size: 20px;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.logout-btn {
+  background: #c0392b;
+  border: none;
+  padding: 8px 18px;
+  color: #fff;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.logout-btn:hover {
+  background: #e74c3c;
+}
+
+/* ===============================
+   DASHBOARD LAYOUT
+================================ */
+.admin-dashboard {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  min-height: calc(100vh - 64px);
+}
+
+/* ===============================
+   SIDEBAR
+================================ */
+.admin-sidebar {
+  background: #1c1c1c;
+  color: #ccc;
+  padding: 30px 20px;
+}
+
+.admin-sidebar h3 {
+  color: #fff;
+  margin-bottom: 20px;
+  font-size: 18px;
+}
+
+.admin-sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.admin-sidebar li {
+  padding: 12px 14px;
+  border-radius: 10px;
+  margin-bottom: 12px;
+  background: #2a2a2a;
+  font-size: 14px;
+  transition: 0.3s;
+}
+
+.admin-sidebar li.active,
+.admin-sidebar li:hover {
+  background: #c89b3c;
+  color: #000;
+  font-weight: bold;
+}
+
+/* ===============================
+   MAIN AREA
+================================ */
+.admin-main {
+  padding: 30px;
+}
+
+/* ===============================
+   CARD
+================================ */
+.card {
+  background: #fff;
+  padding: 24px;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+  margin-bottom: 30px;
+}
+
+.card h2 {
+  margin-bottom: 20px;
+  font-size: 20px;
+}
+
+/* ===============================
+   FORM
+================================ */
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.form-grid input {
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+textarea {
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  resize: vertical;
+  min-height: 80px;
+  margin-bottom: 16px;
+  font-size: 14px;
+}
+
+/* ===============================
+   BUTTONS
+================================ */
+.primary-btn {
+  background: #c89b3c;
+  border: none;
+  padding: 12px 26px;
+  border-radius: 30px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.primary-btn:hover {
+  background: #e0b04f;
+}
+
+/* ===============================
+   PRODUCT LIST
+================================ */
+.product-admin-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.product-row {
+  background: #f8f8f8;
+  padding: 14px 18px;
+  border-radius: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+}
+
+.product-row b {
+  font-weight: bold;
+}
+
+/* ===============================
+   PRODUCT ACTION BUTTONS
+================================ */
+.product-row button {
+  margin-left: 8px;
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: none;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.product-row button:first-of-type {
+  background: #3498db;
+  color: #fff;
+}
+
+.product-row button:first-of-type:hover {
+  background: #5dade2;
+}
+
+.product-row button:last-of-type {
+  background: #e74c3c;
+  color: #fff;
+}
+
+.product-row button:last-of-type:hover {
+  background: #ff6b5a;
+}
+
+/* ===============================
+   RESPONSIVE
+================================ */
+@media (max-width: 900px) {
+  .admin-dashboard {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-sidebar {
+    display: none;
+  }
+
+  .admin-main {
+    padding: 20px;
+  }
+}

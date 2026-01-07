@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Login | Sharma Watch</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Global CSS -->
+  <link rel="stylesheet" href="../css/index.css">
+
+  <style>
+    body.admin-body {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background:
+        linear-gradient(rgba(0,0,0,.65), rgba(0,0,0,.65)),
+        url("https://images.unsplash.com/photo-1523275335684-37898b6baf30")
+        center/cover no-repeat;
+      font-family: "Segoe UI", sans-serif;
+    }
+
+    .admin-login-wrapper {
+      width: 100%;
+      max-width: 420px;
+      padding: 20px;
+    }
+
+    .admin-login-card {
+      background: rgba(255,255,255,0.12);
+      backdrop-filter: blur(14px);
+      border-radius: 18px;
+      padding: 40px 32px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.35);
+      color: #fff;
+      text-align: center;
+    }
+
+    .admin-login-card h2 {
+      margin-bottom: 6px;
+      font-size: 28px;
+      letter-spacing: 1px;
+    }
+
+    .subtitle {
+      font-size: 14px;
+      opacity: 0.85;
+      margin-bottom: 28px;
+    }
+
+    .admin-login-card input {
+      width: 100%;
+      padding: 14px 16px;
+      margin-bottom: 16px;
+      border-radius: 10px;
+      border: none;
+      outline: none;
+      font-size: 15px;
+    }
+
+    .admin-login-card input::placeholder {
+      color: #888;
+    }
+
+    .admin-login-card button {
+      width: 100%;
+      padding: 14px;
+      border-radius: 30px;
+      border: none;
+      font-size: 15px;
+      font-weight: bold;
+      background: #c89b3c;
+      color: #000;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .admin-login-card button:hover {
+      background: #e0b04f;
+      transform: translateY(-1px);
+    }
+
+    .error-msg {
+      margin-top: 14px;
+      font-size: 14px;
+      color: #ffb3b3;
+      min-height: 18px;
+    }
+
+    .brand-footer {
+      margin-top: 22px;
+      font-size: 12px;
+      opacity: 0.7;
+    }
+
+    @media (max-width: 480px) {
+      .admin-login-card {
+        padding: 32px 24px;
+      }
+    }
+  </style>
+</head>
+
+<body class="admin-body">
+
+  <div class="admin-login-wrapper">
+
+    <div class="admin-login-card">
+      <h2>Admin Login</h2>
+      <p class="subtitle">Sharma Watch Dashboard</p>
+
+      <input
+        type="text"
+        id="username"
+        placeholder="Admin Username"
+        autocomplete="off"
+      >
+
+      <input
+        type="password"
+        id="password"
+        placeholder="Password"
+      >
+
+      <button onclick="login()">Login</button>
+
+      <p id="msg" class="error-msg"></p>
+
+      <div class="brand-footer">
+        © 2026 Sharma Watch · Admin Access
+      </div>
+    </div>
+
+  </div>
+
+  <!-- JS (IMPORTANT: SAME FILE NAME) -->
+  <script src="admin.js"></script>
+
+</body>
+</html>

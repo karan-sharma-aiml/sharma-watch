@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Sharma Watch | Luxury Timepieces</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Global CSS -->
+  <link rel="stylesheet" href="css/index.css" />
+
+  <style>
+    body{background:#f6f6f6}
+
+    /* ===== HERO ===== */
+    .hero{
+      height:90vh;
+      background:
+        linear-gradient(rgba(0,0,0,.65),rgba(0,0,0,.65)),
+        url("https://images.unsplash.com/photo-1523275335684-37898b6baf30")
+        center/cover no-repeat;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      color:#fff;
+      padding:20px;
+    }
+
+    .hero h1{
+      font-size:56px;
+      letter-spacing:3px;
+      margin-bottom:14px;
+    }
+
+    .hero p{
+      font-size:19px;
+      opacity:.92;
+      margin-bottom:28px;
+    }
+
+    .hero a{
+      background:#c89b3c;
+      color:#000;
+      padding:16px 40px;
+      border-radius:40px;
+      font-weight:bold;
+      text-decoration:none;
+      transition:.3s;
+      font-size:15px;
+    }
+
+    .hero a:hover{background:#e0b04f}
+
+    /* ===== TRUST STRIP ===== */
+    .trust-strip{
+      background:#111;
+      color:#fff;
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+      gap:30px;
+      padding:40px 20px;
+      text-align:center;
+    }
+
+    .trust-item{
+      font-size:14px;
+      opacity:.9;
+    }
+
+    .trust-item span{
+      display:block;
+      font-size:28px;
+      margin-bottom:8px;
+    }
+
+    /* ===== SECTION ===== */
+    .section{
+      max-width:1300px;
+      margin:90px auto;
+      padding:0 25px;
+    }
+
+    .section h2{
+      text-align:center;
+      font-size:34px;
+      margin-bottom:50px;
+    }
+
+    /* ===== PRODUCTS ===== */
+    .product-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fill,minmax(250px,1fr));
+      gap:28px;
+    }
+
+    .product-card{
+      background:#fff;
+      border-radius:18px;
+      overflow:hidden;
+      box-shadow:0 10px 28px rgba(0,0,0,.1);
+      transition:.35s;
+      cursor:pointer;
+    }
+
+    .product-card:hover{
+      transform:translateY(-8px);
+      box-shadow:0 20px 45px rgba(0,0,0,.18);
+    }
+
+    .product-card img{
+      width:100%;
+      height:240px;
+      object-fit:cover;
+      background:#eee;
+    }
+
+    .product-info{
+      padding:18px;
+      text-align:center;
+    }
+
+    .product-info h3{
+      font-size:16px;
+      margin:6px 0;
+    }
+
+    .product-info p{
+      font-size:13px;
+      color:#666;
+    }
+
+    .price{
+      margin-top:8px;
+      font-size:19px;
+      font-weight:bold;
+    }
+
+    /* ===== STORY ===== */
+    .story{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:50px;
+      align-items:center;
+    }
+
+    @media(max-width:900px){
+      .story{grid-template-columns:1fr}
+    }
+
+    .story img{
+      width:100%;
+      border-radius:22px;
+      box-shadow:0 18px 40px rgba(0,0,0,.18);
+    }
+
+    .story h3{
+      font-size:32px;
+      margin-bottom:14px;
+    }
+
+    .story p{
+      color:#444;
+      line-height:1.8;
+      font-size:15px;
+    }
+
+    .story a{
+      display:inline-block;
+      margin-top:20px;
+      background:#c89b3c;
+      color:#000;
+      padding:14px 34px;
+      border-radius:30px;
+      text-decoration:none;
+      font-weight:bold;
+    }
+
+    /* ===== FOOTER ===== */
+    footer{
+      background:#111;
+      color:#aaa;
+      text-align:center;
+      padding:25px;
+      font-size:14px;
+      margin-top:90px;
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- ===== NAVBAR ===== -->
+<header class="navbar">
+  <div class="logo">Sharma Watch</div>
+  <nav>
+    <a href="index.html" class="active">Home</a>
+    <a href="shop.html">Shop</a>
+    <a href="trust.html">Trust</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+</header>
+
+<!-- ===== HERO ===== -->
+<section class="hero">
+  <div>
+    <h1>TIME · STYLE · TRUST</h1>
+    <p>Luxury Watches Crafted for Those Who Value Time</p>
+    <a href="shop.html">Explore Collection</a>
+  </div>
+</section>
+
+<!-- ===== TRUST ===== -->
+<section class="trust-strip">
+  <div class="trust-item"><span>🕒</span>Premium Timepieces</div>
+  <div class="trust-item"><span>💎</span>Original Quality</div>
+  <div class="trust-item"><span>🤝</span>Direct Owner Deal</div>
+  <div class="trust-item"><span>📦</span>Careful Packaging</div>
+</section>
+
+<!-- ===== FEATURED ===== -->
+<section class="section">
+  <h2>Featured Watches</h2>
+  <div class="product-grid" id="featuredGrid"></div>
+</section>
+
+<!-- ===== STORY ===== -->
+<section class="section story">
+  <div>
+    <h3>Why Sharma Watch?</h3>
+    <p>
+      We believe a watch is not just an accessory —
+      it’s a statement of character.<br><br>
+      Every watch at Sharma Watch is selected with
+      craftsmanship, durability and elegance in mind.
+      No fake discounts. No confusion. Just honest luxury.
+    </p>
+    <a href="about.html">Read Our Story</a>
+  </div>
+
+  <img src="https://images.unsplash.com/photo-1519741497674-611481863552" alt="Luxury Watch">
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  © 2026 SharmaWatch.in · Crafted With Trust & Precision
+</footer>
+
+<script>
+const API = "https://sharma-watch-backend.onrender.com";
+
+fetch(API + "/api/products")
+  .then(r=>r.json())
+  .then(products=>{
+    const grid=document.getElementById("featuredGrid");
+    grid.innerHTML="";
+
+    products.slice(0,6).forEach(p=>{
+      const img = p.image ? API+p.image :
+        "https://via.placeholder.com/400x400?text=No+Image";
+
+      const card=document.createElement("div");
+      card.className="product-card";
+      card.innerHTML=`
+        <img src="${img}">
+        <div class="product-info">
+          <h3>${p.name}</h3>
+          <p>${p.brand}</p>
+          <div class="price">₹${p.price}</div>
+        </div>
+      `;
+      card.onclick=()=>location.href="product.html?id="+p.id;
+      grid.appendChild(card);
+    });
+  });
+</script>
+
+</body>
+</html>
+
+<!-- ===== PREMIUM FEATURES ===== -->
+<section class="section">
+  <h2>Why Customers Trust Sharma Watch</h2>
+
+  <div class="feature-grid">
+    <div class="feature-box">
+      <span>💸</span>
+      <h4>Cash on Delivery</h4>
+      <p>Pay only after receiving your watch. No advance risk.</p>
+    </div>
+
+    <div class="feature-box">
+      <span>📱</span>
+      <h4>Order on WhatsApp</h4>
+      <p>Direct order with the owner. No middleman.</p>
+    </div>
+
+
+    <div class="feature-box">
+      <span>🚚</span>
+      <h4>Pan-nepal Delivery</h4>
+      <p>Fast & secure delivery across all nepal.</p>
+    </div>
+  </div>
+</section>
