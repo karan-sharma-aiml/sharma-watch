@@ -1,4 +1,7 @@
-const API = "https://sharma-watch-backend.onrender.com";
+// ✅ LOCAL BACKEND ONLY
+const API = location.hostname.includes("localhost")
+  ? "http://127.0.0.1:5000"
+  : "https://sharma-watch-backend.onrender.com";
 
 /* ===============================
    LOGIN
@@ -7,6 +10,8 @@ function login() {
   const username = document.getElementById("username").value.trim();
   const password = document.getElementById("password").value.trim();
   const msg = document.getElementById("msg");
+
+  msg.innerText = "";
 
   fetch(`${API}/admin/login`, {
     method: "POST",
@@ -27,35 +32,41 @@ function login() {
 }
 
 /* ===============================
-   LOAD PRODUCTS (NO AUTO LOGOUT)
+   LOAD PRODUCTS
 ================================ */
 function loadProducts() {
-  fetch(`${API}/admin/products`, {
-    credentials: "include"
-  })
+  fetch(`${API}/admin/products`, { credentials: "include" })
     .then(res => {
       if (res.status === 401) {
-        alert("Session expired. Please login again.");
         window.location.href = "login.html";
-        return [];
+        return null;
       }
       return res.json();
     })
     .then(products => {
+      if (!Array.isArray(products)) return;
+
       const box = document.getElementById("productList");
       if (!box) return;
 
       box.innerHTML = "";
 
+      if (products.length === 0) {
+        box.innerHTML = "<p>No products found</p>";
+        return;
+      }
+
       products.forEach(p => {
         box.innerHTML += `
           <div class="product-row">
             <b>${p.name}</b> (${p.brand}) — ₹${p.price}
+            <button onclick="openImageUpload(${p.id})">📷 Upload Images</button>
             <button onclick="deleteProduct(${p.id})">❌</button>
           </div>
         `;
       });
-    });
+    })
+    .catch(() => {});
 }
 
 /* ===============================
@@ -67,16 +78,30 @@ function addProduct() {
     headers: { "Content-Type": "application/json" },
     credentials: "include",
     body: JSON.stringify({
-      name: name.value,
-      brand: brand.value,
-      selling_price: price.value,
-      description: desc.value
+      name: document.getElementById("name").value,
+      brand: document.getElementById("brand").value,
+      selling_price: document.getElementById("price").value,
+      description: document.getElementById("desc").value
     })
-  }).then(loadProducts);
+  })
+  .then(res => {
+    if (!res.ok) throw new Error("Product add failed");
+    return res.json();
+  })
+  .then(() => {
+    document.getElementById("name").value = "";
+    document.getElementById("brand").value = "";
+    document.getElementById("price").value = "";
+    document.getElementById("desc").value = "";
+    loadProducts();
+  })
+  .catch(err => {
+    alert(err.message);
+  });
 }
 
 /* ===============================
-   DELETE
+   DELETE PRODUCT
 ================================ */
 function deleteProduct(id) {
   fetch(`${API}/admin/product/${id}`, {
@@ -86,7 +111,56 @@ function deleteProduct(id) {
 }
 
 /* ===============================
-   LOGOUT (ONLY ON CLICK)
+   IMAGE UPLOAD (1–5 IMAGES)
+================================ */
+let CURRENT_PRODUCT_ID = null;
+
+function openImageUpload(productId) {
+  CURRENT_PRODUCT_ID = productId;
+  document.getElementById("imageInput").click();
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  const imageInput = document.getElementById("imageInput");
+  if (!imageInput) return;
+
+  imageInput.addEventListener("change", function () {
+    const files = this.files;
+
+    if (!CURRENT_PRODUCT_ID || !files || files.length === 0) return;
+
+    if (files.length > 5) {
+      alert("Maximum 5 images allowed");
+      this.value = "";
+      return;
+    }
+
+    const formData = new FormData();
+    for (let i = 0; i < files.length; i++) {
+      formData.append("images", files[i]);
+    }
+
+    fetch(`${API}/admin/product/${CURRENT_PRODUCT_ID}/image`, {
+      method: "POST",
+      credentials: "include",
+      body: formData
+    })
+      .then(res => {
+        if (!res.ok) throw new Error();
+        return res.json();
+      })
+      .then(() => {
+        alert("Images uploaded successfully");
+        this.value = "";
+      })
+      .catch(() => {
+        alert("Image upload failed");
+      });
+  });
+});
+
+/* ===============================
+   LOGOUT
 ================================ */
 function logoutAdmin() {
   fetch(`${API}/admin/logout`, {

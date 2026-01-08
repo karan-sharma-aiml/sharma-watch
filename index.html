@@ -9,15 +9,17 @@
   <link rel="stylesheet" href="css/index.css" />
 
   <style>
-    body{background:#f6f6f6}
+    body{background:#f6f6f6;margin:0}
 
-    /* ===== NAVBAR FIX (ONLY CHANGE) ===== */
+    /* ===== NAVBAR FIX ===== */
     .navbar{
       display:flex;
       justify-content:space-between;
       align-items:center;
-      padding:16px 28px;
+      padding:14px 20px;
       background:#111;
+      flex-wrap:wrap;               /* ✅ FIX */
+      gap:10px;
     }
 
     .navbar .logo{
@@ -25,11 +27,14 @@
       font-weight:700;
       color:#c89b3c;
       letter-spacing:1px;
+      white-space:nowrap;
     }
 
     .navbar nav{
       display:flex;
-      gap:14px;
+      gap:10px;
+      flex-wrap:wrap;               /* ✅ FIX */
+      justify-content:flex-end;
     }
 
     .navbar nav a{
@@ -39,6 +44,7 @@
       border-radius:20px;
       font-size:14px;
       transition:all .25s ease;
+      white-space:nowrap;
     }
 
     .navbar nav a:hover{
@@ -76,21 +82,31 @@
     .hero p{
       font-size:19px;
       opacity:.92;
-      margin-bottom:28px;
+      margin-bottom:32px;
     }
 
+    /* ✅ BUTTON HIGHLIGHT FIX */
     .hero a{
-      background:#c89b3c;
+      display:inline-block;
+      background:linear-gradient(135deg,#c89b3c,#e0b04f);
       color:#000;
-      padding:16px 40px;
-      border-radius:40px;
-      font-weight:bold;
+      padding:16px 46px;
+      border-radius:45px;
+      font-weight:700;
       text-decoration:none;
-      transition:.3s;
       font-size:15px;
+      box-shadow:0 10px 30px rgba(200,155,60,.55);
+      transition:all .3s ease;
     }
 
-    .hero a:hover{background:#e0b04f}
+    .hero a:hover{
+      transform:translateY(-3px);
+      box-shadow:0 18px 45px rgba(200,155,60,.8);
+    }
+
+    .hero a:active{
+      transform:translateY(1px) scale(.98);
+    }
 
     /* ===== TRUST STRIP ===== */
     .trust-strip{
@@ -230,7 +246,6 @@
 
 <body>
 
-<!-- ===== NAVBAR ===== -->
 <header class="navbar">
   <div class="logo">Sharma Watch</div>
   <nav>
@@ -242,7 +257,6 @@
   </nav>
 </header>
 
-<!-- ===== HERO ===== -->
 <section class="hero">
   <div>
     <h1>TIME · STYLE · TRUST</h1>
@@ -251,7 +265,6 @@
   </div>
 </section>
 
-<!-- ===== TRUST ===== -->
 <section class="trust-strip">
   <div class="trust-item"><span>🕒</span>Premium Timepieces</div>
   <div class="trust-item"><span>💎</span>Original Quality</div>
@@ -259,13 +272,11 @@
   <div class="trust-item"><span>📦</span>Careful Packaging</div>
 </section>
 
-<!-- ===== FEATURED ===== -->
 <section class="section">
   <h2>Featured Watches</h2>
   <div class="product-grid" id="featuredGrid"></div>
 </section>
 
-<!-- ===== STORY ===== -->
 <section class="section story">
   <div>
     <h3>Why Sharma Watch?</h3>
@@ -278,27 +289,22 @@
     </p>
     <a href="about.html">Read Our Story</a>
   </div>
-
   <img src="https://images.unsplash.com/photo-1519741497674-611481863552" alt="Luxury Watch">
 </section>
 
-<!-- ✅ PREMIUM FEATURES (RESTORED) -->
 <section class="section">
   <h2>Why Customers Trust Sharma Watch</h2>
-
   <div class="feature-grid">
     <div class="feature-box">
       <span>💸</span>
       <h4>Cash on Delivery</h4>
       <p>Pay only after receiving your watch. No advance risk.</p>
     </div>
-
     <div class="feature-box">
       <span>📱</span>
       <h4>Order on WhatsApp</h4>
       <p>Direct order with the owner. No middleman.</p>
     </div>
-
     <div class="feature-box">
       <span>🚚</span>
       <h4>Pan-Nepal Delivery</h4>
@@ -307,7 +313,6 @@
   </div>
 </section>
 
-<!-- ===== FOOTER ===== -->
 <footer>
   © 2026 SharmaWatch.in · Crafted With Trust & Precision
 </footer>
@@ -320,11 +325,9 @@ fetch(API + "/api/products")
   .then(products=>{
     const grid=document.getElementById("featuredGrid");
     grid.innerHTML="";
-
     products.slice(0,6).forEach(p=>{
       const img = p.image ? API+p.image :
         "https://via.placeholder.com/400x400?text=No+Image";
-
       const card=document.createElement("div");
       card.className="product-card";
       card.innerHTML=`

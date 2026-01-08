@@ -9,7 +9,10 @@
   <link rel="stylesheet" href="css/index.css" />
 
   <style>
-    body{background:#f6f6f6}
+    body{
+      background:#f6f6f6;
+      margin:0;
+    }
 
     /* ===== HERO ===== */
     .page-header{
@@ -76,14 +79,14 @@
       border-radius:22px;
       overflow:hidden;
       box-shadow:0 10px 32px rgba(0,0,0,.12);
-      transition:.4s ease;
+      transition:.35s ease;
       cursor:pointer;
       position:relative;
     }
 
     .product-card:hover{
-      transform:translateY(-10px);
-      box-shadow:0 24px 60px rgba(0,0,0,.22);
+      transform:translateY(-8px);
+      box-shadow:0 22px 55px rgba(0,0,0,.22);
     }
 
     .product-card img{
@@ -129,20 +132,22 @@
       color:#000;
     }
 
+    /* ===== CTA BUTTONS (ONLY HIGHLIGHT) ===== */
     .cta{
-      margin-top:14px;
+      margin-top:16px;
       display:flex;
       justify-content:center;
-      gap:10px;
+      gap:12px;
     }
 
     .cta button{
-      padding:10px 16px;
-      border-radius:20px;
+      padding:11px 18px;
+      border-radius:22px;
       border:none;
       cursor:pointer;
       font-size:13px;
       font-weight:bold;
+      transition:all .25s ease;
     }
 
     .view-btn{
@@ -150,10 +155,16 @@
       color:#fff;
     }
 
+    .view-btn:hover{ background:#000; }
+    .view-btn:active{ transform:scale(.96); }
+
     .wa-btn{
-      background:#25D366;
+      background:linear-gradient(135deg,#25D366,#1ebc5c);
       color:#fff;
+      box-shadow:0 6px 18px rgba(37,211,102,.45);
     }
+
+    .wa-btn:active{ transform:scale(.96); }
 
     /* ===== FOOTER ===== */
     footer{
@@ -174,7 +185,6 @@
 
 <body>
 
-<!-- ===== NAVBAR ===== -->
 <header class="navbar">
   <div class="logo">Sharma Watch</div>
   <nav>
@@ -186,28 +196,25 @@
   </nav>
 </header>
 
-<!-- ===== HERO ===== -->
 <section class="page-header">
   <h1>ALL WATCHES</h1>
   <p>Premium · Original · Trusted Timepieces</p>
 </section>
 
-<!-- ===== FILTER STRIP ===== -->
 <div class="filter-strip">
   <h3>⌚ Our Collection</h3>
   <span>Handpicked watches · Direct from owner · Honest pricing</span>
 </div>
 
-<!-- ===== SHOP ===== -->
 <section class="shop-container">
   <div class="product-grid" id="shopGrid"></div>
 </section>
 
-<!-- ===== FOOTER ===== -->
 <footer>
   © 2026 SharmaWatch.in · Luxury Watches You Can Trust
 </footer>
 
+<!-- ❌ JS UNTOUCHED -->
 <script>
 const API = "https://sharma-watch-backend.onrender.com";
 

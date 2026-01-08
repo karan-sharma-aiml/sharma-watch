@@ -82,7 +82,10 @@
         ></textarea>
       </div>
 
-      <button class="primary-btn" onclick="addProduct()">➕ Add Product</button>
+      <!-- ✅ type="button" VERY IMPORTANT -->
+      <button type="button" class="primary-btn" onclick="addProduct()">
+        ➕ Add Product
+      </button>
 
       <p class="hint">
         ℹ️ First add product → then upload 1–5 images from product list
@@ -112,25 +115,11 @@
 <!-- ================= JS ================= -->
 <script src="admin.js"></script>
 
+<!-- ✅ ONLY SAFE INIT (NO DUPLICATE API / FUNCTIONS) -->
 <script>
-  const API = "https://sharma-watch-backend.onrender.com";
-
-  // ✅ LOGOUT (SIMPLE + SAFE)
-  function logoutAdmin() {
-    fetch(`${API}/admin/logout`, {
-      method: "POST",
-      credentials: "include"
-    })
-    .finally(() => {
-      window.location.replace("login.html");
-    });
-  }
-
-  // ✅ DASHBOARD INIT
-  // ❌ NO AUTO SESSION CHECK HERE
   document.addEventListener("DOMContentLoaded", () => {
     if (typeof loadProducts === "function") {
-      loadProducts(); // admin.js handles 401 safely
+      loadProducts();
     }
   });
 </script>
