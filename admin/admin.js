@@ -70,22 +70,28 @@ function loadProducts() {
 }
 
 /* ===============================
-   ADD PRODUCT
+   ADD PRODUCT  (🔥 FIXED)
 ================================ */
 function addProduct() {
+
+  const price = document.getElementById("price").value;
+
   fetch(`${API}/admin/product`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     credentials: "include",
     body: JSON.stringify({
-      name: document.getElementById("name").value,
-      brand: document.getElementById("brand").value,
-      selling_price: document.getElementById("price").value,
-      description: document.getElementById("desc").value
+      name: document.getElementById("name").value.trim(),
+      brand: document.getElementById("brand").value.trim(),
+      selling_price: Number(price),   // 🔥 FIX (number send)
+      description: document.getElementById("desc").value.trim()
     })
   })
-  .then(res => {
-    if (!res.ok) throw new Error("Product add failed");
+  .then(async res => {
+    if (!res.ok) {
+      const err = await res.json();
+      throw new Error(err.error || "Product add failed");
+    }
     return res.json();
   })
   .then(() => {
@@ -145,16 +151,19 @@ document.addEventListener("DOMContentLoaded", () => {
       credentials: "include",
       body: formData
     })
-      .then(res => {
-        if (!res.ok) throw new Error();
+      .then(async res => {
+        if (!res.ok) {
+          const err = await res.json();
+          throw new Error(err.error || "Upload failed");
+        }
         return res.json();
       })
       .then(() => {
         alert("Images uploaded successfully");
         this.value = "";
       })
-      .catch(() => {
-        alert("Image upload failed");
+      .catch(err => {
+        alert(err.message);
       });
   });
 });
