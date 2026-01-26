@@ -238,8 +238,9 @@ function renderProducts(products){
   }
 
   products.forEach(p=>{
-    const img = p.image ? API+p.image :
-      "https://via.placeholder.com/400x400?text=No+Image";
+    const img = p.image && p.image.startsWith("http")
+     ? p.image
+    : "https://via.placeholder.com/400x400?text=No+Image";
 
     const card=document.createElement("div");
     card.className="product-card";
