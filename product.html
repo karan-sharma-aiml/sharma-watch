@@ -194,7 +194,9 @@
   </nav>
 </header>
 
-<div id="productContainer"></div>
+<div id="productContainer" style="text-align:center;padding:80px">
+ Loading product...
+</div>
 
 <footer>© 2026 Sharma Watch</footer>
 
@@ -217,7 +219,10 @@ let startX = 0;
 fetch(API + "/api/product/" + id)
   .then(r => r.ok ? r.json() : Promise.reject())
   .then(renderProduct)
-  .catch(() => location.href="shop.html");
+  .catch(() => {
+   alert("Product not found or failed to load");
+   location.href="shop.html";
+  });
 
 function renderProduct(p){
   images = (p.images && p.images.length)
