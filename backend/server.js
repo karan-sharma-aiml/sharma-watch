@@ -14,8 +14,9 @@ const productRoutes  = require('./src/routes/productRoutes');
 const cartRoutes     = require('./src/routes/cartRoutes');
 const wishlistRoutes = require('./src/routes/wishlistRoutes');
 const orderRoutes    = require('./src/routes/orderRoutes');
-const contactRoutes  = require('./src/routes/contactRoutes');
-const uploadRoutes   = require('./src/routes/uploadRoutes');
+const contactRoutes      = require('./src/routes/contactRoutes');
+const notificationRoutes = require('./src/routes/notificationRoutes');
+const uploadRoutes       = require('./src/routes/uploadRoutes');
 
 const app = express();
 
@@ -49,6 +50,7 @@ app.use('/api/cart',       cartRoutes);
 app.use('/api/wishlist',   wishlistRoutes);
 app.use('/api/orders',     orderRoutes);
 app.use('/api/contact',    contactRoutes);
+app.use('/api/notifications', notificationRoutes);
 app.use('/api/upload',     uploadRoutes);
 
 app.use(notFound);

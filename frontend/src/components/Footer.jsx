@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {
   FaInstagram, FaFacebookF, FaTwitter, FaWhatsapp, FaYoutube,
 } from 'react-icons/fa';
@@ -40,6 +40,14 @@ const socials = [
 ];
 
 export default function Footer() {
+  const navigate = useNavigate();
+
+  const handleFooterNavigation = (event, path) => {
+    event.preventDefault();
+    navigate(path);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   return (
     <footer className="bg-dark-400 border-t border-white/5">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
@@ -104,6 +112,7 @@ export default function Footer() {
                 <li key={to}>
                   <Link
                     to={to}
+                    onClick={(event) => handleFooterNavigation(event, to)}
                     className="text-gray-400 text-sm hover:text-gold-300 transition-colors hover:translate-x-1 inline-block"
                   >
                     {label}
@@ -129,7 +138,7 @@ export default function Footer() {
               </li>
               <li className="flex items-center gap-3">
                 <HiOutlineMail className="text-gold-400 shrink-0" size={16} />
-                <a href="mailto:karanku1882@gmail.com" className="hover:text-gold-300 transition-colors">karanku1882@gmail.com</a>
+                <a href="mailto:sharmawatchstore@gmail.com" className="hover:text-gold-300 transition-colors">sharmawatchstore@gmail.com</a>
               </li>
             </ul>
           </div>

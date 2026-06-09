@@ -6,6 +6,7 @@ const { sendSuccess, sendError } = require('../utils/responseHandler');
 const {
   sendOTPEmail,
   sendPasswordResetEmail,
+  sendVerificationEmail,
 } = require('../services/emailService');
 
 // ── SEND OTP (Step 1 of Registration) ─────────────
@@ -379,16 +380,93 @@ const forgotPassword = async (req, res, next) => {
     try {
       await sendPasswordResetEmail(user, plainToken);
     } catch (emailErr) {
+      console.error('[forgotPassword] Password reset email failed:', emailErr.message);
       user.resetPasswordToken  = undefined;
       user.resetPasswordExpiry = undefined;
       await user.save();
-      return sendError(res, 500,
-        'Email could not be sent: ' + emailErr.message
+      return sendSuccess(res, 200,
+        'If this email is registered, a reset link has been sent.', {}
       );
     }
 
     return sendSuccess(res, 200,
-      'Password reset link sent to your email.', {}
+      'If this email is registered, a reset link has been sent.', {}
+    );
+  } catch (error) {
+    next(error);
+  }
+};
+
+// ── VERIFY EMAIL TOKEN ────────────────────────────
+const verifyEmail = async (req, res, next) => {
+  try {
+    const { token } = req.body;
+    if (!token) return sendError(res, 400, 'Verification token required.');
+
+    const hashedToken = crypto
+      .createHash('sha256')
+      .update(token)
+      .digest('hex');
+
+    const user = await User.findOne({
+      verificationToken: hashedToken,
+      verificationExpiry: { $gt: new Date() },
+    });
+
+    if (!user) {
+      return sendError(res, 400, 'Invalid or expired verification token.');
+    }
+
+    user.isVerified = true;
+    user.verificationToken = undefined;
+    user.verificationExpiry = undefined;
+    await user.save();
+
+    return sendSuccess(res, 200, 'Email verified successfully.', {});
+  } catch (error) {
+    next(error);
+  }
+};
+
+// ── RESEND VERIFICATION EMAIL ─────────────────────
+const resendVerification = async (req, res, next) => {
+  try {
+    const { email } = req.body;
+    if (!email) return sendError(res, 400, 'Email is required.');
+
+    const user = await User.findOne({ email: email.toLowerCase() });
+    if (!user) return sendError(res, 404, 'Email not found.');
+    if (user.isVerified) return sendError(res, 400, 'Email already verified.');
+
+    const limit = user.canSendVerificationEmail();
+    if (!limit.allowed) {
+      const waitMinutes = Math.ceil(limit.waitSeconds / 60);
+      return sendError(res, 429,
+        `Please wait ${waitMinutes} minute(s) before requesting another verification email.`
+      );
+    }
+
+    const plainToken = user.generateVerificationToken();
+    user.verificationEmailLastSent = new Date();
+    user.verificationEmailCount = (user.verificationEmailCount || 0) + 1;
+    if (limit.reset) {
+      user.verificationEmailCount = 1;
+      user.verificationCooldownUntil = null;
+    }
+
+    await user.save();
+
+    try {
+      await sendVerificationEmail(user, plainToken);
+    } catch (sendErrorException) {
+      console.error('[resendVerification] Email send failed:', sendErrorException.message);
+      return sendError(res, 500,
+        'Failed to send verification email. Please try again later.'
+      );
+    }
+
+    return sendSuccess(res, 200,
+      'Verification email sent. Check your inbox.', { email: user.email }
     );
   } catch (error) {
     next(error);
@@ -501,6 +579,8 @@ module.exports = {
   checkEmailAvailability,
   login,
   forgotPassword,
+  verifyEmail,
+  resendVerification,
   resetPassword,
   getMe,
   updateProfile

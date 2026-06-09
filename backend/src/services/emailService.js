@@ -82,7 +82,13 @@ const sendOTPEmail = async (name, email, otp) => {
 </html>`,
   };
 
+  console.log('EMAIL TARGET:', email);
   const result = await transporter.sendMail(mailOptions);
+  console.log('ACCEPTED:', result.accepted);
+  console.log('REJECTED:', result.rejected);
+  console.log('PENDING:', result.pending);
+  console.log('RESPONSE:', result.response);
+  console.log('MESSAGE ID:', result.messageId);
   console.log('✅ OTP email sent! ID:', result.messageId);
   return result;
 };
@@ -135,8 +141,72 @@ const sendPasswordResetEmail = async (user, plainToken) => {
 </html>`,
   };
 
+  console.log('EMAIL TARGET:', user.email);
   const result = await transporter.sendMail(mailOptions);
+  console.log('ACCEPTED:', result.accepted);
+  console.log('REJECTED:', result.rejected);
+  console.log('PENDING:', result.pending);
+  console.log('RESPONSE:', result.response);
+  console.log('MESSAGE ID:', result.messageId);
   console.log('✅ Reset email sent! ID:', result.messageId);
+  return result;
+};
+
+// ── Verification Email ─────────────────────────────
+const sendVerificationEmail = async (user, plainToken) => {
+  const transporter = createTransporter();
+  const link = `${CLIENT}/verify-email?token=${encodeURIComponent(plainToken)}`;
+
+  const mailOptions = {
+    from:    `"Sharma Watch Store" <${process.env.GMAIL_USER}>`,
+    to:      user.email,
+    subject: 'Verify your email — Sharma Watch Store',
+    html: `
+<!DOCTYPE html>
+<html>
+<body style="margin:0;padding:0;background:#0a0a0a;font-family:Arial,sans-serif;">
+<table width="100%" cellpadding="0" cellspacing="0" style="background:#0a0a0a;padding:40px 16px;">
+  <tr><td align="center">
+    <table width="520" cellpadding="0" cellspacing="0"
+      style="background:#111;border:1px solid #2a2a2a;border-radius:20px;overflow:hidden;max-width:100%;">
+      <tr>
+        <td style="background:linear-gradient(135deg,#0d0d0d,#1c1500);padding:28px;text-align:center;border-bottom:1px solid #2a2a2a;">
+          <p style="color:#d4af37;font-size:22px;font-weight:800;letter-spacing:5px;margin:0;">SHARMA</p>
+          <p style="color:#555;font-size:10px;letter-spacing:4px;margin:5px 0 0;">WATCH STORE · BIRGUNJ, NEPAL</p>
+        </td>
+      </tr>
+      <tr>
+        <td style="padding:36px 32px;">
+          <h2 style="color:#fff;font-size:22px;font-weight:700;margin:0 0 14px;">Verify Your Email</h2>
+          <p style="color:#888;font-size:14px;line-height:1.8;margin:0 0 28px;">
+            Hello <strong style="color:#fff;">${user.name}</strong>, click the button below to verify your email address.
+          </p>
+          <div style="text-align:center;margin:0 0 28px;">
+            <a href="${link}" style="display:inline-block;background:#d4af37;color:#000;text-decoration:none;padding:14px 40px;border-radius:10px;font-weight:700;font-size:15px;">Verify Email</a>
+          </div>
+          <p style="color:#555;font-size:11px;word-break:break-all;">Or copy: <a href="${link}" style="color:#d4af37;">${link}</a></p>
+        </td>
+      </tr>
+      <tr>
+        <td style="background:#0d0d0d;padding:18px;border-top:1px solid #2a2a2a;text-align:center;">
+          <p style="color:#444;font-size:11px;margin:0;">© ${new Date().getFullYear()} Sharma Watch Store · Birgunj, Nepal</p>
+        </td>
+      </tr>
+    </table>
+  </td></tr>
+</table>
+</body>
+</html>`,
+  };
+
+  console.log('EMAIL TARGET:', user.email);
+  const result = await transporter.sendMail(mailOptions);
+  console.log('ACCEPTED:', result.accepted);
+  console.log('REJECTED:', result.rejected);
+  console.log('PENDING:', result.pending);
+  console.log('RESPONSE:', result.response);
+  console.log('MESSAGE ID:', result.messageId);
+  console.log('✅ Verification email sent! ID:', result.messageId);
   return result;
 };
 
@@ -279,7 +349,13 @@ const sendDeliveryEmail = async (user, order) => {
 </html>`,
   };
 
+  console.log('EMAIL TARGET:', user.email);
   const result = await transporter.sendMail(mailOptions);
+  console.log('ACCEPTED:', result.accepted);
+  console.log('REJECTED:', result.rejected);
+  console.log('PENDING:', result.pending);
+  console.log('RESPONSE:', result.response);
+  console.log('MESSAGE ID:', result.messageId);
   console.log('✅ Delivery email sent! ID:', result.messageId);
   return result;
 };
@@ -287,6 +363,7 @@ const sendDeliveryEmail = async (user, order) => {
 module.exports = {
   sendOTPEmail,
   sendPasswordResetEmail,
+  sendVerificationEmail,
   sendDeliveryEmail,
   verifyEmailConnection,
 };

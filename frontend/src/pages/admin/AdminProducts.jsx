@@ -483,7 +483,66 @@ export default function AdminProducts() {
       {/* ── Table ── */}
       {loading ? <LoadingSpinner /> : (
         <div style={{ background: C1, border: `1px solid ${C3}`, borderRadius: 16, overflow: 'hidden' }}>
-          <div style={{ overflowX: 'auto' }}>
+          <div className="lg:hidden" style={{ padding: 18 }}>
+            {products.length === 0 ? (
+              <div style={{ padding: 20, textAlign: 'center', color: '#555', fontSize: 14 }}>No products found</div>
+            ) : products.map((p) => {
+              const sc = stockColors(p.stock);
+              const stc = statusColors[p.status] || statusColors.draft;
+              const img = mainImage(p);
+              return (
+                <div key={p._id} style={{ marginBottom: 16, background: '#111111', border: `1px solid ${C3}`, borderRadius: 22, padding: 16, boxShadow: '0 15px 35px rgba(0,0,0,0.35)' }}>
+                  <div style={{ display: 'flex', gap: 12, marginBottom: 14, alignItems: 'center' }}>
+                    <div style={{ width: 62, height: 62, borderRadius: 20, overflow: 'hidden', background: C2, border: `1px solid ${C3}`, flexShrink: 0 }}>
+                      {img
+                        ? <img src={img} alt={p.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                        : <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><FiPackage size={20} color="#444" /></div>
+                      }
+                    </div>
+                    <div style={{ minWidth: 0 }}>
+                      <p style={{ color: '#fff', fontSize: 15, fontWeight: 700, marginBottom: 2, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{p.name}</p>
+                      <p style={{ color: '#777', fontSize: 12 }}>{p.brand} {p.sku && `· ${p.sku}`}</p>
+                    </div>
+                  </div>
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, marginBottom: 14 }}>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: 4, padding: 12, background: '#121212', borderRadius: 16 }}>
+                      <span style={{ color: '#888', fontSize: 11 }}>Category</span>
+                      <span style={{ color: '#fff', fontSize: 13 }}>{p.category?.name || '—'}</span>
+                    </div>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: 4, padding: 12, background: '#121212', borderRadius: 16 }}>
+                      <span style={{ color: '#888', fontSize: 11 }}>Price</span>
+                      <span style={{ color: G, fontSize: 13, fontWeight: 700 }}>{p.salePrice && p.isSaleActive ? formatPrice(p.salePrice) : formatPrice(p.price)}</span>
+                    </div>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: 4, padding: 12, background: '#121212', borderRadius: 16 }}>
+                      <span style={{ color: '#888', fontSize: 11 }}>Stock</span>
+                      <span style={{ background: sc.bg, color: sc.color, padding: '6px 10px', borderRadius: 999, fontSize: 12, fontWeight: 700, textAlign: 'center' }}>{p.stock}</span>
+                    </div>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: 4, padding: 12, background: '#121212', borderRadius: 16 }}>
+                      <span style={{ color: '#888', fontSize: 11 }}>Status</span>
+                      <span style={{ background: stc.bg, color: stc.color, border: `1px solid ${stc.border}`, padding: '6px 10px', borderRadius: 999, fontSize: 12, fontWeight: 700, textAlign: 'center', textTransform: 'uppercase' }}>{p.status?.replace('_', ' ')}</span>
+                    </div>
+                  </div>
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, alignItems: 'center' }}>
+                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, flex: 1 }}>
+                      {p.isBestSeller && <span style={{ color: '#d4af37', fontSize: 11, background: 'rgba(212,175,55,0.12)', padding: '6px 10px', borderRadius: 999 }}>Best Seller</span>}
+                      {p.isFeatured && <span style={{ color: '#60a5fa', fontSize: 11, background: 'rgba(96,165,250,0.12)', padding: '6px 10px', borderRadius: 999 }}>Featured</span>}
+                      {p.isNewArrival && <span style={{ color: '#34d399', fontSize: 11, background: 'rgba(52,211,153,0.12)', padding: '6px 10px', borderRadius: 999 }}>New</span>}
+                      {p.isTrending && <span style={{ color: '#f472b6', fontSize: 11, background: 'rgba(244,114,182,0.12)', padding: '6px 10px', borderRadius: 999 }}>Trending</span>}
+                    </div>
+                    <div style={{ display: 'flex', gap: 8 }}>
+                      <button onClick={() => openEdit(p)} style={{ width: 38, height: 38, borderRadius: 12, background: 'rgba(96,165,250,0.12)', border: '1px solid rgba(96,165,250,0.2)', color: '#60a5fa', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
+                        <FiEdit2 size={16} />
+                      </button>
+                      <button onClick={() => handleDelete(p._id)} disabled={deleting === p._id} style={{ width: 38, height: 38, borderRadius: 12, background: 'rgba(239,68,68,0.12)', border: '1px solid rgba(239,68,68,0.2)', color: '#ef4444', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', opacity: deleting === p._id ? 0.5 : 1 }}>
+                        <FiTrash2 size={16} />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+          <div className="hidden lg:block" style={{ overflowX: 'auto' }}>
             <table style={{ width: '100%', borderCollapse: 'collapse' }}>
               <thead>
                 <tr style={{ borderBottom: `1px solid ${C3}` }}>

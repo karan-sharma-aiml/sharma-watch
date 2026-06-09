@@ -30,6 +30,7 @@ import AdminProducts   from './pages/admin/AdminProducts';
 import AdminCategories from './pages/admin/AdminCategories';
 import AdminOrders     from './pages/admin/AdminOrders';
 import AdminContacts   from './pages/admin/AdminContacts';
+import AdminNotifications from './pages/admin/Notifications';
 
 export default function App() {
   return (
@@ -63,10 +64,11 @@ export default function App() {
                 {/* Admin Routes */}
                 <Route element={<AdminRoute><AdminLayout /></AdminRoute>}>
                   <Route path="/admin"            element={<AdminDashboard />} />
-                  <Route path="/admin/products"   element={<AdminProducts />} />
-                  <Route path="/admin/categories" element={<AdminCategories />} />
-                  <Route path="/admin/orders"     element={<AdminOrders />} />
-                  <Route path="/admin/contacts"   element={<AdminContacts />} />
+                  <Route path="/admin/products"      element={<AdminProducts />} />
+                  <Route path="/admin/categories"    element={<AdminCategories />} />
+                  <Route path="/admin/notifications" element={<AdminNotifications />} />
+                  <Route path="/admin/orders"        element={<AdminOrders />} />
+                  <Route path="/admin/contacts"      element={<AdminContacts />} />
                 </Route>
               </Routes>
             </WishlistProvider>

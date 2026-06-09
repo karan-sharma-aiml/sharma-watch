@@ -49,10 +49,12 @@ export const authAPI = {
   checkEmail:           (email) => api.get('/auth/check-email', { params: { email } }),
 
   // Auth
-  login:          (data)  => api.post('/auth/login', data),
-  getMe:          ()      => api.get('/auth/me'),
-  forgotPassword: (email) => api.post('/auth/forgot-password', { email }),
-  resetPassword:  (data)  => api.post('/auth/reset-password', data),
+  login:              (data)  => api.post('/auth/login', data),
+  getMe:              ()      => api.get('/auth/me'),
+  forgotPassword:     (email) => api.post('/auth/forgot-password', { email }),
+  verifyEmail:        (token) => api.post('/auth/verify-email', { token }),
+  resendVerification: (email) => api.post('/auth/resend-verification', { email }),
+  resetPassword:      (data)  => api.post('/auth/reset-password', data),
 
   updateProfile: (data) => api.put('/auth/profile', data),
 };

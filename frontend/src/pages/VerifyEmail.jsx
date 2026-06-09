@@ -16,8 +16,15 @@ export default function VerifyEmail() {
 
   useEffect(() => {
     const rawToken = searchParams.get('token');
+    const pageStatus = searchParams.get('status');
 
     console.log('[VerifyEmail] Raw token:', rawToken?.substring(0, 30));
+    console.log('[VerifyEmail] Page status:', pageStatus);
+
+    if (pageStatus === 'pending') {
+      setStatus('pending');
+      return;
+    }
 
     if (!rawToken) {
       setStatus('invalid');
@@ -166,34 +173,36 @@ export default function VerifyEmail() {
             </div>
           )}
 
-          {/* INVALID / EXPIRED */}
-          {status === 'invalid' && (
+          {(status === 'invalid' || status === 'pending') && (
             <div style={{ textAlign: 'center' }}>
               <div style={{
                 width: 72, height: 72,
                 borderRadius: '50%',
-                background: 'rgba(239,68,68,0.1)',
-                border: '2px solid rgba(239,68,68,0.3)',
+                background: status === 'pending' ? 'rgba(59,130,246,0.1)' : 'rgba(239,68,68,0.1)',
+                border: status === 'pending' ? '2px solid rgba(59,130,246,0.3)' : '2px solid rgba(239,68,68,0.3)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
                 margin: '0 auto 20px',
               }}>
-                <FiXCircle size={32} color="#ef4444" />
+                {status === 'pending'
+                  ? <FiMail size={32} color="#3b82f6" />
+                  : <FiXCircle size={32} color="#ef4444" />}
               </div>
               <h2 style={{
                 color: '#fff', fontSize: 22,
                 fontWeight: 700, margin: '0 0 10px',
                 fontFamily: 'Georgia, serif',
               }}>
-                Link Kaam Nahi Kiya
+                {status === 'pending' ? 'Email Verification Pending' : 'Link Kaam Nahi Kiya'}
               </h2>
               <p style={{
                 color: '#888', fontSize: 14,
                 lineHeight: 1.7, marginBottom: 24,
               }}>
-                Verification link expire ho gayi ya already use ho chuki hai।
-                <br />Naya link mangwao neeche।
+                {status === 'pending'
+                  ? 'Please verify your email first. Check your inbox for the verification link. If you did not receive it, request a new verification email below.'
+                  : 'Verification link expire ho gayi ya already use ho chuki hai। Naya link mangwao neeche।'}
               </p>
 
               {resent ? (

@@ -80,7 +80,7 @@ export default function Contact() {
               {
                 icon: HiOutlineMail,
                 title: 'Email Us',
-                lines: ['karanku1882@gmail.com'],
+                lines: ['sharmawatchstore@gmail.com'],
               },
             ].map(({ icon: Icon, title, lines }) => (
               <div key={title} className="glass gold-border rounded-2xl p-5 hover:border-gold-400/40 transition-colors">

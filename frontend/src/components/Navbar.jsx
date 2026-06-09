@@ -7,6 +7,7 @@ import {
 import { useAuth }     from '../context/AuthContext';
 import { useCart }     from '../context/CartContext';
 import { useWishlist } from '../context/WishlistContext';
+import NotificationBell from './NotificationBell';
 
 export default function Navbar() {
   const navigate  = useNavigate();
@@ -139,6 +140,8 @@ export default function Navbar() {
                 </form>
               )}
             </div>
+
+            <NotificationBell />
 
             {/* Wishlist */}
             <Link

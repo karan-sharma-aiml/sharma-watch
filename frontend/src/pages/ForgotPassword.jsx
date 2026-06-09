@@ -24,8 +24,11 @@ export default function ForgotPassword() {
       setSent(true);
     } catch (err) {
       const msg = err.response?.data?.message || '';
-      if (msg.includes('Too many')) setError(msg);
-      else setSent(true); // Don't reveal if email exists
+      if (msg.includes('Too many')) {
+        setError(msg);
+      } else {
+        setError('Unable to send reset link right now. Please try again later.');
+      }
     } finally {
       setLoading(false);
     }

@@ -8,6 +8,8 @@ const {
   checkEmailAvailability,
   login,
   forgotPassword,
+  verifyEmail,
+  resendVerification,
   resetPassword,
   getMe,
   updateProfile,
@@ -27,10 +29,12 @@ router.post('/complete-registration', completeRegistration);
 router.get('/check-email',            checkEmailAvailability);
 
 // ── Auth ───────────────────────────────────────────
-router.post('/login',           loginLimiter,          login);
-router.post('/forgot-password', forgotPasswordLimiter, forgotPassword);
-router.post('/reset-password',  resetPassword);
-router.get('/me',               protect,               getMe);
-router.put('/profile',          protect,               updateProfile);
+router.post('/login',              loginLimiter,          login);
+router.post('/forgot-password',    forgotPasswordLimiter, forgotPassword);
+router.post('/verify-email',       verifyEmail);
+router.post('/resend-verification', resendVerificationLimiter, resendVerification);
+router.post('/reset-password',     resetPassword);
+router.get('/me',                  protect,               getMe);
+router.put('/profile',             protect,               updateProfile);
 
 module.exports = router;

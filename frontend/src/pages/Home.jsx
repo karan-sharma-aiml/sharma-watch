@@ -5,6 +5,8 @@ import {
   FiAward, FiStar, FiClock, FiLock,
 } from 'react-icons/fi';
 import { productsAPI, categoriesAPI } from '../services/api';
+import { notificationAPI } from '../services/notificationAPI';
+import { useToast } from '../context/ToastContext';
 import ProductCard    from '../components/ProductCard';
 import ReviewCard     from '../components/ReviewCard';
 import LoadingSpinner from '../components/LoadingSpinner';
@@ -175,15 +177,36 @@ function SectionHeading({ eyebrow, title, subtitle, centered = true }) {
 
 /* ── Component ───────────────────────────────── */
 export default function Home() {
-  const [products,   setProducts]   = useState([]);
-  const [categories, setCategories] = useState([]);
-  const [loadingP,   setLoadingP]   = useState(true);
-  const [loadingC,   setLoadingC]   = useState(true);
-  const [email,      setEmail]      = useState('');
-  const [statDisplay, setStatDisplay] = useState([0, 0, 0, 0]);
+  const { addToast } = useToast();
+  const [products,      setProducts]   = useState([]);
+  const [categories,    setCategories] = useState([]);
+  const [loadingP,      setLoadingP]   = useState(true);
+  const [loadingC,      setLoadingC]   = useState(true);
+  const [email,         setEmail]      = useState('');
+  const [subscribing,   setSubscribing] = useState(false);
+  const [statDisplay,   setStatDisplay] = useState([0, 0, 0, 0]);
   const [activeReview, setActiveReview] = useState(0);
   const reviewCardsRef = useRef([]);
   const reviewTrackRef = useRef(null);
+
+  const handleSubscribe = async (e) => {
+    e.preventDefault();
+    if (!email.trim()) {
+      addToast('Please enter your email to subscribe.', 'warning');
+      return;
+    }
+
+    setSubscribing(true);
+    try {
+      await notificationAPI.subscribe({ email });
+      addToast('You will now receive product updates.', 'success');
+      setEmail('');
+    } catch (err) {
+      addToast(err.response?.data?.message || 'Subscription failed.', 'error');
+    } finally {
+      setSubscribing(false);
+    }
+  };
 
   useEffect(() => {
     productsAPI.getAll({ limit: 8, page: 1 })
@@ -904,7 +927,7 @@ export default function Home() {
           </p>
 
           <form
-            onSubmit={(e) => { e.preventDefault(); setEmail(''); }}
+            onSubmit={handleSubscribe}
             className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto"
           >
             <input
@@ -923,9 +946,10 @@ export default function Home() {
             />
             <button
               type="submit"
-              className="px-7 py-3.5 bg-gold-400 text-black text-sm font-bold rounded-xl hover:bg-gold-300 transition-colors whitespace-nowrap"
+              disabled={subscribing}
+              className="px-7 py-3.5 bg-gold-400 text-black text-sm font-bold rounded-xl hover:bg-gold-300 transition-colors whitespace-nowrap disabled:opacity-60"
             >
-              Subscribe
+              {subscribing ? 'Subscribing…' : 'Subscribe'}
             </button>
           </form>
 
